@@ -15,6 +15,10 @@ class Question(models.Model):  # Question class inherits from models.Model
     pub_date = models.DateTimeField('date published')
     def __str__(self):
       return self.question_text
+    def was_published_recently(self):
+      now = timezone.now()
+      return now - datetime.timedelta(days=1) <= self.pub_date <= now
+
 
 
 
@@ -25,7 +29,4 @@ class Choice(models.Model): # Choice class inherits from models.Model
     votes = models.IntegerField(default=0) # sets default value to 0
     def __str__(self):
       return self.choice_text
-    def was_published_recently(self):
-      return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
-
 
